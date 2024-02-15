@@ -24,18 +24,24 @@ You can try out a live version [here](https://mermaid.live/).
 ### Run published image
 
 ```bash
-docker run --publish 8000:80 ghcr.io/mermaid-js/mermaid-live-editor
+docker run --platform linux/amd64 --publish 8000:8080 ghcr.io/mermaid-js/mermaid-live-editor
 ```
 
 ### To configure renderer URL
 
-When building, Set the Environment variable MERMAID_RENDERER_URL to the rendering service.
+When building set the MERMAID_RENDERER_URL build argument to the rendering service.
 Default is `https://mermaid.ink`
 
 ### To configure Kroki Instance URL
 
-When building, Set the Environment variable MERMAID_KROKI_RENDERER_URL to your Kroki instance.
+When building set the MERMAID_KROKI_RENDERER_URL build argument to your Kroki instance.
 Default is `https://kroki.io`
+
+### To configure Analytics
+
+When building set the MERMAID_ANALYTICS_URL build argument to your plausible instance, and MERMAID_DOMAIN to your domain.
+
+Default is empty, disabling analytics.
 
 ### Development
 
@@ -43,21 +49,46 @@ Default is `https://kroki.io`
 docker compose up --build
 ```
 
-Then open http://localhost:8000
+Then open http://localhost:3000
+
+### Building and running images locally
+
+#### Build
+
+```bash
+docker build -t mermaid-js/mermaid-live-editor .
+```
+
+#### Run
+
+```bash
+docker run --detach --name mermaid-live-editor --publish 8080:8080 mermaid-js/mermaid-live-editor
+```
+
+Visit: <http://localhost:8080>
+
+#### Stop
+
+```bash
+docker stop mermaid-live-editor
+```
 
 ## Setup
 
-[Volta](https://volta.sh) is used for managing node and yarn versions.
+Below link will help you making a copy of the repository in your local system.
 
-This project is set up using [Yarn](https://classic.yarnpkg.com/en/docs/getting-started):
+https://docs.github.com/en/get-started/quickstart/fork-a-repo
 
-```
-yarn install
-```
+## Requirements
+
+- [volta](https://volta.sh/) to manage node versions.
+- [Node.js](https://nodejs.org/en/). `volta install node`
+- [yarn](https://yarnpkg.com/) package manager. `volta install yarn`
 
 ## Development
 
-```
+```sh
+yarn install
 yarn dev -- --open
 ```
 
